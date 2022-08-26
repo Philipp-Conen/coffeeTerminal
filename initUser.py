@@ -8,26 +8,31 @@ reader = SimpleMFRC522()
 
 
 newUser = input("Enter new user name (Firstname.Lastname): ")
+existingUser = False
+
+f = open("coffeeList.csv","r")
+reader=csv.reader(f)
+for row in reader:
+    if newUser in row:
+        existingUser = True
+        print ("ERROR: User already existing!")
+f.close()
 
 
-csv_file = csv.reader(open('coffeeList.csv', "r"), delimiter=",")
-for row in csv_file:
-    if newUser == row[1]:
-         print ("ERROR: User already existing!")
-
-    else:
-        csv_file = csv.writer(open('coffeeList.csv', "r"), delimiter=",")
-        csv_file.writerow(newUser + ",0")
+if existingUser == False:
+    with open('coffeeList.csv','a') as fd:
+        fd.write(newUser + ",0")
+        print("New user joined database!")
      
 
 
 owner = "Owner: "
 coffee = "\nCoffee: 0"
-print("Now place your tag to write")
+print("Now place your tag for writing...")
 
 try:
         reader.write(owner+newUser+coffee)
-        print("Done")
+        print("Completed.")
 
 finally:
         GPIO.cleanup()
