@@ -10,12 +10,13 @@ reader = SimpleMFRC522()
 newUser = input("Enter new user name (Firstname.Lastname): ")
 
 
-csv_file = csv.writer(open('coffeeList.csv', "w"), delimiter=",")
+csv_file = csv.reader(open('coffeeList.csv', "r"), delimiter=",")
 for row in csv_file:
     if newUser == row[1]:
          print ("ERROR: User already existing!")
 
     else:
+        csv_file = csv.writer(open('coffeeList.csv', "r"), delimiter=",")
         csv_file.writerow(newUser + ",0")
      
 
