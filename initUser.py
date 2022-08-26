@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 import csv
 from mfrc522 import SimpleMFRC522
 
-reader = SimpleMFRC522()
+rfid = SimpleMFRC522()
 
 
 newUser = input("Enter new user name (Firstname.Lastname): ")
@@ -29,7 +29,7 @@ if existingUser == False:
     coffee = "\nCoffee: 0"
     print("Now place your tag for writing...")
     try:
-            reader.write(owner+newUser+coffee)
+            rfid.write(owner+newUser+coffee)
             print("Completed.")
     finally:
             GPIO.cleanup()
