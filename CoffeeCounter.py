@@ -2,6 +2,7 @@
 
 import RPi.GPIO as GPIO
 import time
+import csv
 from mfrc522 import SimpleMFRC522
 
 rfid = SimpleMFRC522()
@@ -11,7 +12,7 @@ print("Ready for coffee checkin")
 while True:
 
     try:
-        id, text = reader.read()
+        id, text = rfid.read()
         print(id)
         owner = (text.split("\n"))[0] 
         coffee = (text.split("\n"))[1]
@@ -21,11 +22,20 @@ while True:
         print("Coffee: " + coffee)
 
         coffee = int(coffee) + 1
-        with open('coffeeList.csv','w') as fd:
-            for row in fd:
-                if owner in row:
-                    fd.write(owner + "," + coffee)
-            fd.close()
+
+        with open('coffeeList.csv') as inf:
+            reader = csv.reader(inf.readlines())
+
+        with open('coffeeList.csv', 'w') as outf:
+            writer = csv.writer(outf)
+            for line in reader:
+                if owner in line:
+                    writer.writerow(owner + "," + coffee)
+                    break
+                else:
+                    print("ERROR: Not found!")
+
+
         rfid.write("Owner: " + owner + "\n" + "Coffee: " + str(coffee))
         print("New: " + str(coffee))
     finally:
