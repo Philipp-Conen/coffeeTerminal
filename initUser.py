@@ -23,16 +23,13 @@ if existingUser == False:
     with open('coffeeList.csv','a') as fd:
         fd.write(newUser + ",0")
         print("New user joined database!")
+        fd.close()
      
-
-
-owner = "Owner: "
-coffee = "\nCoffee: 0"
-print("Now place your tag for writing...")
-
-try:
-        reader.write(owner+newUser+coffee)
-        print("Completed.")
-
-finally:
-        GPIO.cleanup()
+    owner = "Owner: "
+    coffee = "\nCoffee: 0"
+    print("Now place your tag for writing...")
+    try:
+            reader.write(owner+newUser+coffee)
+            print("Completed.")
+    finally:
+            GPIO.cleanup()
