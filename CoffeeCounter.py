@@ -2,13 +2,14 @@
 
 import RPi.GPIO as GPIO
 import time
+import database
 from mfrc522 import SimpleMFRC522
 
 reader = SimpleMFRC522()
 
 print("Ready for coffee checkin")
 
-
+database
 
 while True:
 
