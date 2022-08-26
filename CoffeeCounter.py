@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 import time
 from mfrc522 import SimpleMFRC522
 
-reader = SimpleMFRC522()
+rfid = SimpleMFRC522()
 
 print("Ready for coffee checkin")
 
@@ -21,7 +21,12 @@ while True:
         print("Coffee: " + coffee)
 
         coffee = int(coffee) + 1
-        reader.write("Owner: " + owner + "\n" + "Coffee: " + str(coffee))
+        with open('coffeeList.csv','w') as fd:
+            for row in fd:
+                if owner in row:
+                    fd.write(owner + "," + coffee)
+            fd.close()
+        rfid.write("Owner: " + owner + "\n" + "Coffee: " + str(coffee))
         print("New: " + str(coffee))
     finally:
         GPIO.cleanup()
